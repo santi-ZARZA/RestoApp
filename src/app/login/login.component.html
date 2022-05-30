@@ -1,0 +1,22 @@
+<!-- Default form login -->
+<div class="col d-flex justify-content-center" style="margin-top: 15rem;">   
+    <div class="card text-center float-center m-5 p-5" style="width: 56rem;">
+        <form [formGroup]="formularioContacto" (ngSubmit)="submit()">
+            <!-- Email -->
+            <p>E-mail:
+                <input type="email" id="email" class="form-control mb-4" placeholder="E-mail" formControlName="email">
+                <span *ngIf="this.formularioContacto.get('mail')?.errors?.['required']">
+                    (El mail no puede quedar vacío)
+                </span>
+                <span *ngIf="this.formularioContacto.get('mail')?.errors?.['email']">
+                    (El mail no es válido)
+                </span>
+            </p>
+            <!-- Password -->
+            <p>Contraseña
+            <input type="password" id="password" class="form-control mb-4" placeholder="Contraseña" formControlName="password">
+            </p>
+            <button class="btn btn-info" type="submit">Enviar</button>
+        </form>
+    </div>
+</div>

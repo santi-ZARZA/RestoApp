@@ -1,0 +1,137 @@
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-text">
+      <h5 style="margin-left: 50px;">A la carta</h5>
+    </span>
+    <form class="form-inline">
+        <a class="nav-link" href="#"><i class="bi bi-box-arrow-in-right"></i></a>
+    </form>
+  </nav>
+<div class='container'>  
+    <div class="row m-5">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">
+                  Precio Total Menu
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title p-2"><i class="bi bi-currency-dollar"></i>{{this.menu.totalPrice}}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">
+                  Promedio Tiempo de Preparación
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title p-2"><i class="bi bi-clock-history"></i>{{this.menu.timePreparation}}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">
+                  Promedio Healt Score
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title p-2"><i class="bi bi-bar-chart"></i>{{this.menu.healtScore}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='row'>  
+        <div class="col-md-12 w-100" >
+            <div class="card"  >
+                <div class="card-header">
+                    Menu
+                  </div>
+                  <div *ngIf="this.menu.menuItems.length == 0">
+                    <h5 class="card-title text-center"> No hay platos seleccionados.</h5>
+                  </div>
+                  
+                    <div *ngIf="this.menu.menuItems.length > 0">  
+                        <div>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Plato</th>
+                                  <th scope="col">Precio</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let plate of this.menu.menuItems; index as i" >
+                                    <th scope="row">
+                                      <app-image-plate [srcImg]="plate.image" ></app-image-plate>                                  
+                                    </th>
+                                  <td>
+                                    {{ plate.title }}
+                                  </td>
+                                  <td>{{ plate.price | number }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>  
+                    </div>  
+                <div class="card-footer text-muted">
+                    <button (click)="openForm(content)">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <div>
+            <h4 class="modal-title" id="modal-basic-title">Agregar un plato al Menu</h4>
+        </div>
+      <button type="button" class="btn-close" aria-label="Close" (click)="CerrarModal(modal)"></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+            <div>
+                filtre por el plato que desee
+                <input type="search" #filterPlate (change)="OnInputChange($event)">
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">seleccionado</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let plate of this.tablePlates; index as i" >
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>
+                    {{ plate.title }}
+                  </td>
+                  <td>{{ plate.price | number }}</td>
+                  <td><input type="checkbox" [value]="plate.id" (click)="Select(plate)"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" (click)="Agregar(modal)" >Agregar</button>
+    </div>
+  </ng-template>
+
+
+  <!-- <ngb-carousel *ngIf="this.menu.menuItems.length > 0">  
+    <ng-template *ngFor="let plate of this.menu.menuItems" ngbSlide>
+        <div class="card">
+            <app-image-plate [srcImg]="plate.image" ></app-image-plate>
+                <div class="carousel-caption">
+                    <app-title-plate
+                    [title]="plate.title"
+                    ></app-title-plate>
+                </div> 
+        </div>  
+    </ng-template>  
+</ngb-carousel>   -->
